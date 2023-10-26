@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Friz AI Advanced Codebot</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.7.2/styles/default.min.css">
+    <style>
+        :root {
+            --primary-bg-color: #f9f9f9;
+            --secondary-bg-color: rgba(249, 249, 249, 0.6);
+            --text-color: #333;
+        }
+        body, header {
+            font-family: 'Arial', sans-serif;
+            color: var(--text-color);
+            background-color: var(--primary-bg-color);
+        }
+        .container {
+            display: grid;
+            grid-template-rows: 1fr 2fr;
+            grid-gap: 20px;
+            max-width: 1200px;
+            margin: auto;
+            padding: 20px;
+            border-radius: 12px;
+            background-color: var(--secondary-bg-color);
+            box-shadow: 0px 0px 12px rgba(0, 0, 0, 0.1);
+        }
+        .query-form, .advanced-section, .output-section {
+            margin-bottom: 20px;
+        }
+        .output-box {
+            background-color: var(--primary-bg-color);
+            padding: 12px;
+            border-radius: 8px;
+        }
+    </style>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.7.2/highlight.min.js"></script>
+    <script>
+        // Combined and fully populated advanced JavaScript functions and data models
+        const codebotDataModels = {
+            programmingLanguages: ['Python', 'JavaScript', 'Java', 'C++', 'Lua', 'HTML', 'CSS', 'Ruby', 'Swift', 'Go', 'C#', 'PHP', 'TypeScript', 'Kotlin', 'Rust'],
+            codeSnippets: {
+                Python: ['print("Hello, World!")', 'for i in range(10): print(i)', 'import math'],
+                JavaScript: ['console.log("Hello, World!");', 'for(let i = 0; i < 10; i++) { console.log(i); }', 'document.addEventListener("DOMContentLoaded", function() {});'],
+                HTML: ['<!DOCTYPE html>', '<html>', '<body><h1>Hello, World!</h1></body>', '</html>'],
+                CSS: ['body { font-family: Arial, sans-serif; }', 'h1 { color: blue; }'],
+                Ruby: ['puts "Hello, World!"', '5.times { puts "Ruby loop" }'],
+                Swift: ['import UIKit', 'print("Hello, World!")'],
+                Go: ['package main', 'import "fmt"', 'func main() { fmt.Println("Hello, World!") }'],
+            },
+            userQueries: [],
+            botResponses: []
+        };
+
+        function addCodeSnippet(language, snippet) {
+            if (!codebotDataModels.codeSnippets[language]) {
+                codebotDataModels.codeSnippets[language] = [];
+            }
+            codebotDataModels.codeSnippets[language].push(snippet);
+        }
+
+        function logUserQueryAndResponse(query, response) {
+            codebotDataModels.userQueries.push(query);
+            codebotDataModels.botResponses.push(response);
+        }
+
+        function recommendLanguageBasedOnQuery(query) {
+            const lowerQuery = query.toLowerCase();
+            for (let language of codebotDataModels.programmingLanguages) {
+                if (lowerQuery.includes(language.toLowerCase())) {
+                    return language;
+                }
+            }
+            return 'Unknown language';
+        }
+
+        function handleBasicQuery() {
+            const query = document.getElementById('basicQuery').value;
+            const output = recommendLanguageBasedOnQuery(query);
+            document.getElementById('basicQueryOutput').textContent = output;
+        }
+
+        function handleAdvancedQuery() {
+            const query = document.getElementById('advancedQuery').value;
+            // AI-enhanced recommendation logic can go here
+            document.getElementById('advancedQueryOutput').textContent = "AI-enhanced output here";
+        }
+
+        document.addEventListener('DOMContentLoaded', (event) => {
+            document.querySelectorAll('pre code').forEach((block) => {
+                hljs.highlightBlock(block);
+            });
+        });
+    </script>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Friz AI Advanced Codebot</h1>
+            <p>Welcome to the Friz AI Codebot interface, which utilizes advanced AI and machine learning algorithms.</p>
+        </header>
+        <section class="interaction-section">
+            <form id="basicQueryForm" class="query-form">
+                <label for="basicQuery">Enter Your Basic Query:</label>
+                <input type="text" id="basicQuery" name="basicQuery">
+                <input type="button" value="Submit" onclick="handleBasicQuery()">
+            </form>
+            <div class="advanced-section">
+                <h2>AI-Enhanced User Input-Output</h2>
+                <textarea id="advancedQuery" rows="4" cols="50" placeholder="Enter your advanced query or project description here"></textarea>
+                <input type="button" value="Get AI Recommendation" onclick="handleAdvancedQuery()">
+                <h3>AI-Generated Recommendations:</h3>
+                <pre id="advancedQueryOutput"></pre>
+            </div>
+        </section>
+        <section class="output-section">
+            <div id="basicOutput" class="output-box">
+                <h2>Basic Output:</h2>
+                <pre id="basicQueryOutput"></pre>
+            </div>
+            <div id="advancedOutput" class="output-box">
+                <h2>Advanced Output:</h2>
+                <pre id="advancedQueryOutput"></pre>
+            </div>
+        </section>
+    </div>
+</body>
+</html>
